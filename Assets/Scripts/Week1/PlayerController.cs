@@ -9,7 +9,7 @@ public class PlayerController: MonoBehaviour
 	public float speed;
 	public float upSpeed = 10;
 	public float maxSpeed = 10;
-	public Transform enemyLocation;
+	// public Transform enemyLocation;
 	public Text scoreText;
 	public ParticleSystem dustcloud;
 	
@@ -31,6 +31,7 @@ public class PlayerController: MonoBehaviour
 		marioSprite = GetComponent<SpriteRenderer>();
 		marioAnimator = GetComponent<Animator>();
 		marioAudio = GetComponent<AudioSource>();
+		GameManager.OnPlayerDeath  +=  PlayerDiesSequence;
     }
 
 	void  FixedUpdate()
@@ -97,30 +98,38 @@ public class PlayerController: MonoBehaviour
 		
 		if (!onGroundState && countScoreState)
       {
-          if (Mathf.Abs(transform.position.x - enemyLocation.position.x) < 0.5f)
-          {
-              countScoreState = false;
-              score++;
-			  enemyLocation.localScale = new Vector3(1+score/10,1+score/10,0);
-			  enemyLocation.position = new Vector3(enemyLocation.position.x,positionY+score/20,0);
-              Debug.Log(score);
-          }
+          // if (Mathf.Abs(transform.position.x - enemyLocation.position.x) < 0.5f)
+          // {
+              // countScoreState = false;
+              // score++;
+			  // enemyLocation.localScale = new Vector3(1+score/10,1+score/10,0);
+			  // enemyLocation.position = new Vector3(enemyLocation.position.x,positionY+score/20,0);
+              // Debug.Log(score);
+          // }
       }
 	  
 	  marioAnimator.SetFloat("xSpeed",Mathf.Abs(marioBody.velocity.x));
 	  marioAnimator.SetBool("onGround",onGroundState);
     }
 	
-	void OnTriggerEnter2D(Collider2D other)
-  {
-      if (other.gameObject.CompareTag("Enemy"))
-      {
-          Debug.Log("Collided with Gomba!");
-		  Application.LoadLevel(1);
-      }
-  }
+	// void OnTriggerEnter2D(Collider2D other)
+  // {
+      // if (other.gameObject.CompareTag("Enemy"))
+      // {
+          // Debug.Log("Collided with Gomba!");
+		  // Application.LoadLevel(1);
+      // }
+  // }
   
   void PlayJumpSound(){
 	  marioAudio.PlayOneShot(marioAudio.clip);
   }
+  
+  void  PlayerDiesSequence(){
+	// Mario dies
+	Debug.Log("Mario dies");
+	Application.LoadLevel(1);
+	// do whatever you want here, animate etc
+	// ...
+	}
 }
