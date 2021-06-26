@@ -7,6 +7,7 @@ TagManager:
   - Ground
   - Gomba
   - Enemy
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -14,19 +15,19 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - QuestionBox
+  - Obstacles
+  - Spawned
+  - BG1
+  - BG2
+  - BG3
+  - BG4
+  - BG5
+  - BG6
+  - BG7
+  - BG8
+  - BG9
+  - BG10
   - 
   - 
   - 
