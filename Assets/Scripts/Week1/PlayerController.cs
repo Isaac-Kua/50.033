@@ -6,11 +6,12 @@ using System;
 
 public class PlayerController: MonoBehaviour
 {
+	public  GameConstants gameConstants;
 	public float speed;
 	public float upSpeed = 10;
 	public float maxSpeed = 10;
 	// public Transform enemyLocation;
-	public Text scoreText;
+	// public Text scoreText;
 	public ParticleSystem dustcloud;
 	
 	private Rigidbody2D marioBody;
@@ -23,33 +24,40 @@ public class PlayerController: MonoBehaviour
 	private float score = 0;
 	private float positionY = -3.5f;
 	
-    // Start is called before the first frame update
-    void Start()
-    {
-        Application.targetFrameRate =  30;
+	// Start is called before the first frame update
+	void Start()
+	{
+		Application.targetFrameRate =  30;
 		marioBody = GetComponent<Rigidbody2D>();
 		marioSprite = GetComponent<SpriteRenderer>();
 		marioAnimator = GetComponent<Animator>();
 		marioAudio = GetComponent<AudioSource>();
 		GameManager.OnPlayerDeath  +=  PlayerDiesSequence;
-    }
+	}
 
 	void  FixedUpdate()
 	{
+		if (Input.GetKeyDown("z")){
+			CentralManager.centralManagerInstance.consumePowerup(KeyCode.Z,this.gameObject);
+		}
+
+		if (Input.GetKeyDown("x")){
+			CentralManager.centralManagerInstance.consumePowerup(KeyCode.X,this.gameObject);
+		}
 		
 		if (Input.GetKeyUp("a") || Input.GetKeyUp("d")){
 			// stop
 			marioBody.velocity = Vector2.zero;
-		 }
-		  
+		}
+		
 		
 		float moveHorizontal = Input.GetAxis("Horizontal");
 		if (Mathf.Abs(moveHorizontal) > 0){
 			Vector2 movement = new Vector2(moveHorizontal, 0);
 			if (marioBody.velocity.magnitude < maxSpeed)
-                  marioBody.AddForce(movement * speed);
+			marioBody.AddForce(movement * speed);
 		}
-	  
+		
 		if (Input.GetKeyDown("space") && onGroundState)
 		{
 			marioBody.AddForce(Vector2.up * upSpeed, ForceMode2D.Impulse);
@@ -59,31 +67,30 @@ public class PlayerController: MonoBehaviour
 		
 		if (Input.GetKeyDown("r"))
 		{
-			Application.LoadLevel(1);
+			PlayerDiesSequence();
 		}
 	}
 	
 	// called when the cube hits the floor
 	void OnCollisionEnter2D(Collision2D col)
 	{
-      if (col.gameObject.CompareTag("Ground")) {
-          onGroundState = true; // back on ground
-          countScoreState = false; // reset score state
-          scoreText.text = "Score: " + score.ToString();
-		  dustcloud.Play();
-		  Debug.Log("landed");
-      };
-	  
-	  if (col.gameObject.CompareTag("Obstacle")) {
-          onGroundState = true; // back on ground
-          // countScoreState = false; // reset score state
-          // scoreText.text = "Score: " + score.ToString();
-      };
+		if (col.gameObject.CompareTag("Ground")) {
+			onGroundState = true; // back on ground
+			countScoreState = false; // reset score state
+			// scoreText.text = "Score: " + score.ToString();
+			dustcloud.Play();
+		};
+		
+		if (col.gameObject.CompareTag("Obstacle")) {
+			onGroundState = true; // back on ground
+			// countScoreState = false; // reset score state
+			// scoreText.text = "Score: " + score.ToString();
+		};
 	}	
 	
 	// Update is called once per frame
-    void Update()
-    {
+	void Update()
+	{
 		if (Input.GetKeyDown("a") && faceRightState){
 			faceRightState = false;
 			marioSprite.flipX = true;
@@ -97,39 +104,54 @@ public class PlayerController: MonoBehaviour
 		}   
 		
 		if (!onGroundState && countScoreState)
-      {
-          // if (Mathf.Abs(transform.position.x - enemyLocation.position.x) < 0.5f)
-          // {
-              // countScoreState = false;
-              // score++;
-			  // enemyLocation.localScale = new Vector3(1+score/10,1+score/10,0);
-			  // enemyLocation.position = new Vector3(enemyLocation.position.x,positionY+score/20,0);
-              // Debug.Log(score);
-          // }
-      }
-	  
-	  marioAnimator.SetFloat("xSpeed",Mathf.Abs(marioBody.velocity.x));
-	  marioAnimator.SetBool("onGround",onGroundState);
-    }
+		{
+			// if (Mathf.Abs(transform.position.x - enemyLocation.position.x) < 0.5f)
+			// {
+			// countScoreState = false;
+			// score++;
+			// enemyLocation.localScale = new Vector3(1+score/10,1+score/10,0);
+			// enemyLocation.position = new Vector3(enemyLocation.position.x,positionY+score/20,0);
+			// Debug.Log(score);
+			// }
+		}
+		
+		marioAnimator.SetFloat("xSpeed",Mathf.Abs(marioBody.velocity.x));
+		marioAnimator.SetBool("onGround",onGroundState);
+	}
 	
 	// void OnTriggerEnter2D(Collider2D other)
-  // {
-      // if (other.gameObject.CompareTag("Enemy"))
-      // {
-          // Debug.Log("Collided with Gomba!");
-		  // Application.LoadLevel(1);
-      // }
-  // }
-  
-  void PlayJumpSound(){
-	  marioAudio.PlayOneShot(marioAudio.clip);
-  }
-  
-  void  PlayerDiesSequence(){
-	// Mario dies
-	Debug.Log("Mario dies");
-	Application.LoadLevel(1);
-	// do whatever you want here, animate etc
-	// ...
+	// {
+	// if (other.gameObject.CompareTag("Enemy"))
+	// {
+	// Debug.Log("Collided with Gomba!");
+	// Application.LoadLevel(1);
+	// }
+	// }
+
+	void PlayJumpSound(){
+		marioAudio.PlayOneShot(marioAudio.clip);
+	}
+		
+	void  PlayerDiesSequence(){
+		GameManager.OnPlayerDeath  -=  PlayerDiesSequence;
+		// Mario dies
+		Debug.Log("Mario dies");
+		StartCoroutine(Death());
+	}
+	
+	IEnumerator Death(){
+		Debug.Log("Flatten starts");
+		int steps =  5;
+		float stepper =  1.0f/(float) steps;
+
+		for (int i =  0; i  <  steps; i  ++){
+			transform.localScale  =  new  Vector3(transform.localScale.x, transform.localScale.y  -  stepper, transform.localScale.z);
+
+			// make sure enemy is still above ground
+			transform.position  =  new  Vector3(transform.position.x, gameConstants.groundSurface  +  GetComponent<SpriteRenderer>().bounds.extents.y, transform.position.z);
+		}
+		Debug.Log("Flatten ends");
+		yield return new WaitForSeconds(5f);
+		Application.LoadLevel(1);
 	}
 }

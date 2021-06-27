@@ -6,7 +6,7 @@ public class SpawnManager : MonoBehaviour
 {
 	void Awake(){
 		for (int j =  0; j  <  2; j++)
-			spawnFromPooler(ObjectType.greenEnemy);
+			spawnFromPooler(ObjectType.gombaEnemy);
 	}
 	
     // Start is called before the first frame update
@@ -22,7 +22,7 @@ public class SpawnManager : MonoBehaviour
     }
 	
 	void spawnNew(){
-		spawnFromPooler(ObjectType.gombaEnemy);
+		spawnFromPooler(ObjectType.greenEnemy);
 	}
 	
 	void  spawnFromPooler(ObjectType i){

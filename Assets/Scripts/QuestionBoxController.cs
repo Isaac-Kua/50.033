@@ -33,6 +33,7 @@ public class QuestionBoxController: MonoBehaviour
 			// spawn mushroom
 			Instantiate(consummablePrefab, new  Vector3(this.transform.position.x, this.transform.position.y  +  1.0f, this.transform.position.z), Quaternion.identity);
 			// begin check to disable object's spring and rigidbody
+			CentralManager.centralManagerInstance.increaseScore();
 			StartCoroutine(DisableHittable());
 		}
 		

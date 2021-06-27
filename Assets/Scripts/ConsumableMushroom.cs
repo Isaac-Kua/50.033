@@ -46,8 +46,10 @@ public class ConsumableMushroom : MonoBehaviour
       };
 	  
 	  if (col.gameObject.CompareTag("Player")) {
-          Debug.Log("gotcha bitch");
-		  OnBecameInvisible();
+          transform.localScale = new Vector3(2,2,2);
+		  GetComponent<Collider2D>().enabled  =  false;
+		  itemBody.constraints = RigidbodyConstraints2D.FreezeAll;
+		  itemSprite.enabled = false;
       };
 	}	
 }

@@ -8,10 +8,14 @@ public  class CentralEnemyController : MonoBehaviour
 	private  float originalX;
 	private  Vector2 velocity;
 	private  Rigidbody2D enemyBody;
+	private  SpriteRenderer enemySprite;
+	private  bool MarioDead;
 	
 	void  Start()
 	{
+		MarioDead = false;
 		enemyBody  =  GetComponent<Rigidbody2D>();
+		enemySprite  =  GetComponent<SpriteRenderer>();
 		
 		// get the starting position
 		originalX  =  transform.position.x;
@@ -48,23 +52,33 @@ public  class CentralEnemyController : MonoBehaviour
 			ComputeVelocity();
 			MoveEnemy();
 		}
+		
+		if(MarioDead){
+			enemySprite.flipX = !enemySprite.flipX;
+			enemySprite.flipY = !enemySprite.flipY;
+		}
 	}
 	
-void  OnTriggerEnter2D(Collider2D other){
-	// check if it collides with Mario
-	if (other.gameObject.tag  ==  "Player"){
-		// check if collides on top
-		float yoffset = (other.transform.position.y  -  this.transform.position.y);
-		if (yoffset  >  0.75f){
-			CentralManager.centralManagerInstance.increaseScore();
-			KillSelf();
+	void  OnTriggerEnter2D(Collider2D other){
+		// check if it collides with Mario
+		if (other.gameObject.tag  ==  "Player"){
+			// check if collides on top
+			float yoffset = (other.transform.position.y  -  this.transform.position.y);
+			if (yoffset  >  0.75f){
+				KillSelf();
+			}
+			else{
+				// hurt player
+				CentralManager.centralManagerInstance.damagePlayer();
+			}
 		}
-		else{
-			// hurt player
-			CentralManager.centralManagerInstance.damagePlayer();
+		
+		if (other.gameObject.tag  !=  "Player"){
+			moveRight *= -1;
+			ComputeVelocity();
+			MoveEnemy();
 		}
 	}
-}
 	
 	void  KillSelf(){
 		// enemy dies
@@ -86,7 +100,7 @@ void  OnTriggerEnter2D(Collider2D other){
 			yield  return  null;
 		}
 		Debug.Log("Flatten ends");
-		this.gameObject.SetActive(false);
+		this.gameObject.SetActive(false);	
 		Debug.Log("Enemy returned to pool");
 		yield  break;
 	}
@@ -94,7 +108,6 @@ void  OnTriggerEnter2D(Collider2D other){
 	// animation when player is dead
 	void  EnemyRejoice(){
 		Debug.Log("Enemy killed Mario");
-		// do whatever you want here, animate etc
-		// ...
+		MarioDead = true;
 	}
 }

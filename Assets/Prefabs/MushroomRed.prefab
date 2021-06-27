@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1045995387347679656
+--- !u!1 &3035248540004860790
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,39 +8,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7915063300686508803}
-  - component: {fileID: 8247799300148376924}
-  - component: {fileID: 1885810443884853430}
-  - component: {fileID: 4017360210184434082}
-  - component: {fileID: 2004260545333327943}
+  - component: {fileID: 5281795572039879133}
+  - component: {fileID: 6263751681675251586}
+  - component: {fileID: 4517391553453818472}
+  - component: {fileID: 1394927209157331836}
+  - component: {fileID: 4560969312153698969}
   m_Layer: 8
-  m_Name: ConsumableMushroomSimple
+  m_Name: MushroomRed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7915063300686508803
+--- !u!4 &5281795572039879133
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1045995387347679656}
+  m_GameObject: {fileID: 3035248540004860790}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.75, y: 0.09, z: -3.7667294}
+  m_LocalPosition: {x: -3.5304863, y: 11.242968, z: -3.7667294}
   m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &8247799300148376924
+--- !u!212 &6263751681675251586
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1045995387347679656}
+  m_GameObject: {fileID: 3035248540004860790}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -86,14 +86,14 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &1885810443884853430
+--- !u!50 &4517391553453818472
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1045995387347679656}
+  m_GameObject: {fileID: 3035248540004860790}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -107,13 +107,13 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!60 &4017360210184434082
+--- !u!60 &1394927209157331836
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1045995387347679656}
+  m_GameObject: {fileID: 3035248540004860790}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -142,13 +142,13 @@ PolygonCollider2D:
       - {x: 0.2662325, y: -0.26610726}
       - {x: 0.48288774, y: -0.27896035}
       - {x: 0.5359645, y: -0.00372684}
---- !u!114 &2004260545333327943
+--- !u!114 &4560969312153698969
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1045995387347679656}
+  m_GameObject: {fileID: 3035248540004860790}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 855021b932e428145bddc3922014782b, type: 3}
