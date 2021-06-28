@@ -21,8 +21,8 @@ public class PlayerController: MonoBehaviour
 	private bool onGroundState = true;
 	private bool faceRightState = true;
 	private bool countScoreState = false;
-	private float score = 0;
-	private float positionY = -3.5f;
+	// private float score = 0;
+	// private float positionY = -3.5f;
 	
 	// Start is called before the first frame update
 	void Start()

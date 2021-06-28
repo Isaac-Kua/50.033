@@ -10,6 +10,9 @@ public  class GameConstants : ScriptableObject
 	int currentScore;
 	
 	int currentPlayerHealth;
+	public int playerMaxSpeed = 5;
+    public int playerMaxJumpSpeed = 30;
+    public int playerDefaultForce = 150;
 
 	// for Reset values
 	Vector3 gombaSpawnPointStart = new Vector3(2.5f, -0.45f, 0); // hardcoded location
