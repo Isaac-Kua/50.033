@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d95df8e1f7c5a644b3c0b5a82c63242, type: 3}
   m_Name: GameConstants
   m_EditorClassIdentifier: 
-  playerStartingMaxSpeed: 5
-  playerMaxJumpSpeed: 30
+  playerMaxSpeed: 5
+  playerMaxJumpSpeed: 10
   playerDefaultForce: 150
   consumeTimeStep: 10
   consumeLargestScale: 4
@@ -26,3 +26,4 @@ MonoBehaviour:
   maxOffset: 5
   enemyPatroltime: 2
   groundSurface: -1
+  groundDistance: -3.5

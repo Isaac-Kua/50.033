@@ -12,7 +12,8 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameManager.OnEnemyKilled +=  spawnNew;
+		Debug.Log("Spawn Manager + spawn new");
+        GameManagerWeek5.OnEnemyKilled +=  spawnNew;
     }
 
     // Update is called once per frame

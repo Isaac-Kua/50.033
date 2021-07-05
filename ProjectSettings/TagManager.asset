@@ -8,6 +8,8 @@ TagManager:
   - Gomba
   - Enemy
   - Obstacle
+  - Score
+  - Powerup
   layers:
   - Default
   - TransparentFX

@@ -14,7 +14,7 @@ public class ConsumableMushroom : MonoBehaviour
 	void Start()
 	{
 		itemBody = GetComponent<Rigidbody2D>();
-		// enemySprite = GetComponent<SpriteRenderer>();
+		itemSprite = GetComponent<SpriteRenderer>();
 		// get the starting position
 		originalX = transform.position.x;
 		ComputeVelocity();
@@ -46,10 +46,9 @@ public class ConsumableMushroom : MonoBehaviour
       };
 	  
 	  if (col.gameObject.CompareTag("Player")) {
-          transform.localScale = new Vector3(2,2,2);
-		  GetComponent<Collider2D>().enabled  =  false;
+		  transform.position = new Vector3(0,-6,0);
 		  itemBody.constraints = RigidbodyConstraints2D.FreezeAll;
-		  itemSprite.enabled = false;
+		  // itemSprite.enabled = false;
       };
 	}	
 }

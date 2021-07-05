@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System;
 
 public class PlayerController: MonoBehaviour
@@ -32,7 +33,8 @@ public class PlayerController: MonoBehaviour
 		marioSprite = GetComponent<SpriteRenderer>();
 		marioAnimator = GetComponent<Animator>();
 		marioAudio = GetComponent<AudioSource>();
-		GameManager.OnPlayerDeath  +=  PlayerDiesSequence;
+		// GameManager.OnPlayerDeath  +=  PlayerDiesSequence;
+		GameManagerWeek5.OnPlayerDeath  +=  PlayerDiesSequence;
 	}
 
 	void  FixedUpdate()
@@ -65,10 +67,10 @@ public class PlayerController: MonoBehaviour
 			countScoreState = true; //check if Gomba is underneath
 		}
 		
-		if (Input.GetKeyDown("r"))
-		{
-			PlayerDiesSequence();
-		}
+		// if (Input.GetKeyDown("r"))
+		// {
+			// PlayerDiesSequence();
+		// }
 	}
 	
 	// called when the cube hits the floor
@@ -133,25 +135,27 @@ public class PlayerController: MonoBehaviour
 	}
 		
 	void  PlayerDiesSequence(){
-		GameManager.OnPlayerDeath  -=  PlayerDiesSequence;
+		// GameManager.OnPlayerDeath  -=  PlayerDiesSequence;
+		GameManagerWeek5.OnPlayerDeath  -=  PlayerDiesSequence;
 		// Mario dies
 		Debug.Log("Mario dies");
 		StartCoroutine(Death());
 	}
 	
 	IEnumerator Death(){
-		Debug.Log("Flatten starts");
 		int steps =  5;
 		float stepper =  1.0f/(float) steps;
 
 		for (int i =  0; i  <  steps; i  ++){
+			CentralManager.centralManagerInstance.consumePowerup(KeyCode.Z,this.gameObject);
+			CentralManager.centralManagerInstance.consumePowerup(KeyCode.X,this.gameObject);
 			transform.localScale  =  new  Vector3(transform.localScale.x, transform.localScale.y  -  stepper, transform.localScale.z);
 
 			// make sure enemy is still above ground
 			transform.position  =  new  Vector3(transform.position.x, gameConstants.groundSurface  +  GetComponent<SpriteRenderer>().bounds.extents.y, transform.position.z);
 		}
-		Debug.Log("Flatten ends");
-		yield return new WaitForSeconds(5f);
-		Application.LoadLevel(1);
+		yield return new WaitForSeconds(2f);
+		// AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("MarioWeek1", LoadSceneMode.Single);
+		Application.LoadLevel (Application.loadedLevel);
 	}
 }

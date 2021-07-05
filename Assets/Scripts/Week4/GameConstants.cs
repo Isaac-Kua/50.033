@@ -40,4 +40,5 @@ public  class GameConstants : ScriptableObject
 	public float maxOffset = 5f;
 	public float enemyPatroltime = 2f; 
 	public float groundSurface = -1f;
+	public  float groundDistance =  -3.5f;
 }

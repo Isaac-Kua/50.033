@@ -25,11 +25,26 @@ public class MenuController : MonoBehaviour
 		{
 			if (eachChild.name != "Score" && eachChild.name != "Powerups")
 			{
-				Debug.Log("Child found. Name: " + eachChild.name);
+				// Debug.Log("Child found. Name: " + eachChild.name);
 				// disable them
 				eachChild.gameObject.SetActive(false);
 				Time.timeScale = 1.0f;
           }
       }
 	}
+	
+	// void PlayerDiesSequenceMenu(){
+		// // GameManagerWeek5.OnPlayerDeath  -=  PlayerDiesSequenceMenu;
+		// foreach (Transform eachChild in transform)
+		// {
+			// if (eachChild.name != "Score" && eachChild.name != "Powerups")
+			// {
+				// // Debug.Log("Child found. Name: " + eachChild.name);
+				// // disable them
+				// eachChild.gameObject.SetActive(true);
+				// Time.timeScale = 1.0f;
+          // }
+      // }
+	  		// Application.LoadLevel(0);
+	// }
 }

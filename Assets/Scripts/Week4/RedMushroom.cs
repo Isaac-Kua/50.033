@@ -14,8 +14,8 @@ public  class RedMushroom : MonoBehaviour, ConsumableInterface
 
 	IEnumerator  removeEffect(GameObject player){
 		yield  return  new  WaitForSeconds(5.0f);
-		player.GetComponent<PlayerController>().upSpeed  -=  10;
 		Destroy(gameObject);
+		player.GetComponent<PlayerController>().upSpeed  -=  10;
 		Debug.Log("jump gone");
 	}
 	

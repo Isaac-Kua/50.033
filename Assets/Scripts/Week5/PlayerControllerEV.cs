@@ -17,9 +17,9 @@ public class PlayerControllerEV : MonoBehaviour
 	private bool faceRightState = true;
 	private bool countScoreState = false;
 	
-	private bool isDead;
+	private bool isDead = false;
 	private bool isADKeyUp = true;
-	private bool isSpacebarUp;
+	private bool isSpacebarUp = true;
 	
 	void Start()
 	{
@@ -59,7 +59,7 @@ public class PlayerControllerEV : MonoBehaviour
 		}
 		
 		if (Input.GetKeyUp("space")){
-			isSpacebarDown = true;
+			isSpacebarUp = true;
 		}
 		
 		marioSprite.flipX = !faceRightState;
@@ -111,4 +111,20 @@ public class PlayerControllerEV : MonoBehaviour
 	void PlayJumpSound(){
 		marioAudio.PlayOneShot(marioAudio.clip);
 	}
+	
+	public void PlayerDiesSequence()
+    {
+        isDead = true;
+        // marioAnimator.SetBool("isDead", true);
+        GetComponent<Collider2D>().enabled = false;
+        marioBody.AddForce(Vector3.up * 30, ForceMode2D.Impulse);
+        marioBody.gravityScale = 30;
+        StartCoroutine(dead());
+    }
+    
+    IEnumerator dead()
+    {
+        yield return new WaitForSeconds(1.0f);
+        marioBody.bodyType = RigidbodyType2D.Static;
+    }
 }

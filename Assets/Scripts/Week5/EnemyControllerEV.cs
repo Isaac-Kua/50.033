@@ -1,19 +1,21 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
-public  class CentralEnemyController : MonoBehaviour
+public  class EnemyControllerEV : MonoBehaviour
 {
 	public  GameConstants gameConstants;
+	public UnityEvent onPlayerDeath;
+    public UnityEvent onEnemyDeath;
 	private  int moveRight;
 	private  float originalX;
 	private  Vector2 velocity;
 	private  Rigidbody2D enemyBody;
 	private  SpriteRenderer enemySprite;
-	private  bool MarioDead;
+	private  bool MarioDead = false;
 	
 	void  Start()
 	{
-		MarioDead = false;
 		enemyBody  =  GetComponent<Rigidbody2D>();
 		enemySprite  =  GetComponent<SpriteRenderer>();
 		
@@ -25,8 +27,6 @@ public  class CentralEnemyController : MonoBehaviour
 		
 		// compute initial velocity
 		ComputeVelocity();
-		
-		GameManagerWeek5.OnPlayerDeath  +=  EnemyRejoice;
 	}
 	
 	void  ComputeVelocity()
@@ -41,6 +41,14 @@ public  class CentralEnemyController : MonoBehaviour
 
 	void  Update()
 	{
+		Debug.Log("print me");
+		Debug.Log(originalX);
+		
+		Debug.Log("print me 2");
+		Debug.Log(enemyBody.position.x);
+		
+		Debug.Log("print me 3");
+		Debug.Log(gameConstants.maxOffset);
 		if (Mathf.Abs(enemyBody.position.x  -  originalX) <  gameConstants.maxOffset)
 		{// move gomba
 			MoveEnemy();
@@ -64,14 +72,13 @@ public  class CentralEnemyController : MonoBehaviour
 		if (other.gameObject.tag  ==  "Player"){
 			// check if collides on top
 			float yoffset = (other.transform.position.y  -  this.transform.position.y);
-			if (yoffset  >  0.2){
-				// Debug.Log(yoffset);
+			if (yoffset  >  0.75f){
 				KillSelf();
+				onEnemyDeath.Invoke();
 			}
 			else{
+				onPlayerDeath.Invoke();
 				// hurt player
-				Debug.Log(yoffset);
-				CentralManager.centralManagerInstance.damagePlayer();
 			}
 		}
 		
@@ -84,13 +91,12 @@ public  class CentralEnemyController : MonoBehaviour
 	
 	void  KillSelf(){
 		// enemy dies
-		CentralManager.centralManagerInstance.increaseScore();
 		StartCoroutine(flatten());
-		// Debug.Log("Kill sequence ends");
+		Debug.Log("Kill sequence ends");
 	}
 	
 	IEnumerator  flatten(){
-		// Debug.Log("Flatten starts");
+		Debug.Log("Flatten starts");
 		int steps =  5;
 		float stepper =  1.0f/(float) steps;
 
@@ -101,15 +107,22 @@ public  class CentralEnemyController : MonoBehaviour
 			this.transform.position  =  new  Vector3(this.transform.position.x, gameConstants.groundSurface  +  GetComponent<SpriteRenderer>().bounds.extents.y, this.transform.position.z);
 			yield  return  null;
 		}
-		// Debug.Log("Flatten ends");
+		Debug.Log("Flatten ends");
 		this.gameObject.SetActive(false);	
-		// Debug.Log("Enemy returned to pool");
+		Debug.Log("Enemy returned to pool");
 		yield  break;
 	}
 	
 	// animation when player is dead
 	void  EnemyRejoice(){
-		GameManagerWeek5.OnPlayerDeath  -=  EnemyRejoice;
+		Debug.Log("Enemy killed Mario");
 		MarioDead = true;
 	}
+	
+	public void PlayerDeathResponse()
+    {
+        // GetComponent<Animator>().SetBool("playerIsDead", true);
+		MarioDead = true;
+        velocity = Vector3.zero;
+    }
 }

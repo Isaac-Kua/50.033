@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public  class OrangeMushroom : MonoBehaviour, ConsumableInterface
+public  class OrangeMushroom : Singleton<OrangeMushroom>, ConsumableInterface
 {
 	public  Texture t;
 	public  void  consumedBy(GameObject player){
@@ -23,14 +23,7 @@ public  class OrangeMushroom : MonoBehaviour, ConsumableInterface
 		if (col.gameObject.CompareTag("Player")){
 			// update UI
 			CentralManager.centralManagerInstance.addPowerup(t, 1, this);
-			// GetComponent<Collider2D>().enabled  =  false;
 		};
-		
-		// if (col.gameObject.CompareTag("Player")) {
-			// transform.localScale = new Vector3(3,3,3);
-			// // gameObject.SetActive(false);
-		// };
-
 	}
 
 }
