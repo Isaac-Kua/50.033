@@ -39,7 +39,8 @@ public  class PowerUpManager : MonoBehaviour
 	}
 	
 	void  cast(int i, GameObject p){
-		Debug.Log(powerups[i] !=  null);
+		// Debug.Log(powerups[i] !=  null);
+
 		if (powerups[i] !=  null){
 			powerups[i].consumedBy(p); // interface method
 			removePowerup(i);

@@ -64,7 +64,7 @@ public  class CentralEnemyController : MonoBehaviour
 		if (other.gameObject.tag  ==  "Player"){
 			// check if collides on top
 			float yoffset = (other.transform.position.y  -  this.transform.position.y);
-			if (yoffset  >  0.2){
+			if (yoffset  >  -3.7){
 				// Debug.Log(yoffset);
 				KillSelf();
 			}
@@ -84,7 +84,6 @@ public  class CentralEnemyController : MonoBehaviour
 	
 	void  KillSelf(){
 		// enemy dies
-		CentralManager.centralManagerInstance.increaseScore();
 		StartCoroutine(flatten());
 		// Debug.Log("Kill sequence ends");
 	}
@@ -96,13 +95,16 @@ public  class CentralEnemyController : MonoBehaviour
 
 		for (int i =  0; i  <  steps; i  ++){
 			this.transform.localScale  =  new  Vector3(this.transform.localScale.x, this.transform.localScale.y  -  stepper, this.transform.localScale.z);
-
 			// make sure enemy is still above ground
-			this.transform.position  =  new  Vector3(this.transform.position.x, gameConstants.groundSurface  +  GetComponent<SpriteRenderer>().bounds.extents.y, this.transform.position.z);
-			yield  return  null;
+			this.transform.position  =  new  Vector3(this.transform.position.x, gameConstants.groundSurface, this.transform.position.z);
+			// yield  return  new WaitForSeconds(0.05f);
+			yield return null;
 		}
 		// Debug.Log("Flatten ends");
-		this.gameObject.SetActive(false);	
+		this.gameObject.SetActive(false);
+		
+		this.transform.localScale = new Vector3 (1,1,1);
+		CentralManager.centralManagerInstance.increaseScore();
 		// Debug.Log("Enemy returned to pool");
 		yield  break;
 	}

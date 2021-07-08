@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public class CameraController : Singleton<CameraController>
 {
 	public  Transform player; // Mario's Transform
 	public  Transform endLimit; // GameObject that indicates end of map

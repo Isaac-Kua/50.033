@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
 
-public class PlayerController: MonoBehaviour
+public class PlayerController: Singleton<PlayerController>
 {
 	public  GameConstants gameConstants;
 	public float speed;
@@ -88,7 +88,18 @@ public class PlayerController: MonoBehaviour
 			// countScoreState = false; // reset score state
 			// scoreText.text = "Score: " + score.ToString();
 		};
+		
+		if (col.gameObject.CompareTag("Spike")) {
+			CentralManager.centralManagerInstance.damagePlayer();
+		};
 	}	
+	
+	void OnTriggerEnter2D(Collider2D other){
+		if (other.tag  ==  "Door") {
+			
+		// GameManagerWeek5.OnPlayerDeath  -=  PlayerDiesSequence;
+		};
+	}
 	
 	// Update is called once per frame
 	void Update()
@@ -136,7 +147,9 @@ public class PlayerController: MonoBehaviour
 		
 	void  PlayerDiesSequence(){
 		// GameManager.OnPlayerDeath  -=  PlayerDiesSequence;
-		GameManagerWeek5.OnPlayerDeath  -=  PlayerDiesSequence;
+		// GameManagerWeek5.OnPlayerDeath  -=  PlayerDiesSequence;
+		
+		Debug.Log("player death off");
 		// Mario dies
 		Debug.Log("Mario dies");
 		StartCoroutine(Death());
@@ -145,6 +158,7 @@ public class PlayerController: MonoBehaviour
 	IEnumerator Death(){
 		int steps =  5;
 		float stepper =  1.0f/(float) steps;
+		marioBody.constraints = RigidbodyConstraints2D.FreezeAll;
 
 		for (int i =  0; i  <  steps; i  ++){
 			CentralManager.centralManagerInstance.consumePowerup(KeyCode.Z,this.gameObject);
@@ -157,5 +171,8 @@ public class PlayerController: MonoBehaviour
 		yield return new WaitForSeconds(2f);
 		// AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("MarioWeek1", LoadSceneMode.Single);
 		Application.LoadLevel (Application.loadedLevel);
+		transform.localScale = new Vector3(1,1,1);
+		transform.position = new Vector3(-6.2f,4,0);
+		marioBody.constraints = RigidbodyConstraints2D.FreezeRotation;
 	}
 }

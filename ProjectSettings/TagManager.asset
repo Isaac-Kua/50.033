@@ -10,6 +10,8 @@ TagManager:
   - Obstacle
   - Score
   - Powerup
+  - Spike
+  - Door
   layers:
   - Default
   - TransparentFX

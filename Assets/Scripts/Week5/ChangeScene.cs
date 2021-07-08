@@ -18,6 +18,8 @@ public  class ChangeScene : MonoBehaviour
 	{
 		yield  return  new  WaitUntil(() =>  !changeSceneSound.isPlaying);
 		Debug.Log("music stopped");
+		GameObject player = GameObject.FindGameObjectsWithTag("Player")[0];
+		player.transform.position = new Vector3 (-6.2f,4,0);
 		CentralManager.centralManagerInstance.changeScene();
 	}
 }

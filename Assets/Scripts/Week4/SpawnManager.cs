@@ -12,7 +12,6 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-		Debug.Log("Spawn Manager + spawn new");
         GameManagerWeek5.OnEnemyKilled +=  spawnNew;
     }
 
@@ -23,7 +22,8 @@ public class SpawnManager : MonoBehaviour
     }
 	
 	void spawnNew(){
-		spawnFromPooler(ObjectType.greenEnemy);
+		ObjectType i = Random.Range(0, 2) == 0 ? ObjectType.gombaEnemy : ObjectType.greenEnemy;
+        spawnFromPooler(i);
 	}
 	
 	void  spawnFromPooler(ObjectType i){

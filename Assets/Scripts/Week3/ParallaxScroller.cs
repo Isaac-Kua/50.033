@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ParallaxScroller : MonoBehaviour
+public class ParallaxScroller : Singleton<ParallaxScroller>
 {
 	public  Renderer[] layers;
 	public float[] speedMultiplier;
